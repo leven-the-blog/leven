@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+    <title>A Simple Blog</title>
+</head>
+<body>
+    {{#each posts}}
+    <article>
+        <h1><a href="{{slug}}">{{title}}</a></h1>
+        <small><time>{{date}}</time></small>
+        {{{content}}}
+    </article>
+    {{/each}}
+</body>
+</html>

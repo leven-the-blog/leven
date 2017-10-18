@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <title>Archive | A Simple Blog</title>
+</head>
+<body>
+    <nav>
+        <ul>
+        {{#each posts}}
+        <li>
+            <a href="{{slug}}">{{title}}</a>
+            <small><time>{{date}}</time></small>
+        </li>
+        {{/each}}
+        </ul>
+    </nav>
+</body>
+</html>

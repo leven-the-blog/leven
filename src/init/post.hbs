@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{title}} | A Simple Blog</title>
+</head>
+<body>
+    <article>
+        <h1><a href="{{slug}}">{{title}}</a></h1>
+        <small><time>{{date}}</time></small>
+        {{{content}}}
+    </article>
+    <section>
+        {{#if prev}}
+        <span>
+            Previous:
+            <a href="{{prev.slug}}">
+                {{prev.title}}
+                <small><time>({{prev.date}})</time></small>
+            </a>
+        </span>
+        {{/if}}
+
+        {{#if next}}
+        <span>
+            Next:
+            <a href="{{next.slug}}">
+                {{next.title}}
+                <small><time>({{next.date}})</time></small>
+            </a>
+        </span>
+        {{/if}}
+    </section>
+</body>
+</html>
