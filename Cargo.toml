@@ -3,6 +3,7 @@ name = "boop"
 version = "0.1.0"
 authors = ["Ram Kaniyur <quadrupleslap@gmail.com>"]
 description = "Make your own blog!"
+license = "MIT"
 
 [dependencies]
 badlog = "0.3"
