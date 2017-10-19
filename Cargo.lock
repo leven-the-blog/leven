@@ -1,5 +1,5 @@
 [root]
-name = "boop"
+name = "leven"
 version = "0.1.0"
 dependencies = [
  "badlog 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",

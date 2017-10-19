@@ -1,9 +1,9 @@
 [package]
-name = "boop"
+name = "leven"
 version = "0.1.0"
 authors = ["Ram Kaniyur <quadrupleslap@gmail.com>"]
 description = "Make your own blog!"
-repository = "https://github.com/quadrupleslap/boop"
+repository = "https://github.com/quadrupleslap/leven"
 license = "MIT"
 
 [dependencies]
