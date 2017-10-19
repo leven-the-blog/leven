@@ -35,7 +35,7 @@ fn main() {
         (@setting ColoredHelp)
 
         (@subcommand init =>
-            (about: "Creates a new blog in the current directory")
+            (about: "Creates a new blog")
         )
 
         (@subcommand post =>

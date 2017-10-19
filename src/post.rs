@@ -2,12 +2,18 @@ use chrono::Utc;
 use std::{env, fs};
 use error::{Error, Result};
 use std::fs::OpenOptions;
-use std::path::PathBuf;
+use std::path::{self, PathBuf};
 use std::process::Command;
 
 pub fn post(title: &str, edit: bool) -> Result {
     let mut path = env::current_dir()?;
     path.push("posts");
+
+    // Ensure that the title is valid.
+
+    if title.chars().any(path::is_separator) {
+        return Err(Error::Other("The title can't contain a path separator."));
+    }
 
     // Ensure that the posts directory exists.
     
