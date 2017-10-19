@@ -1,43 +1,36 @@
-use std::{env, fs};
-use std::error::Error;
+use error::{Error, Result};
+use std::fs;
 use std::fs::File;
 use std::io::Write;
 
-pub fn init() -> Result<(), Box<Error>> {
-    let mut dir = env::current_dir()?;
+pub fn init() -> Result {
+    // Ensure the current directory is empty.
 
-    // Ensure the directory is empty.
-
-    if fs::read_dir(&dir)?.next().is_some() {
-       return Err("current directory not empty".into());
+    if fs::read_dir(".")?.next().is_some() {
+        return Err(Error::Other("The current directory isn't empty."));
     }
 
     // Create directories.
 
-    dir.push("posts");
-    fs::create_dir(&dir)?;
-    dir.pop();
-    
-    dir.push("out");
-    fs::create_dir(&dir)?;
-    dir.pop();
-
-    dir.push("templates");
-    fs::create_dir(&dir)?;
+    fs::create_dir("out")?;
+    fs::create_dir("posts")?;
+    fs::create_dir("templates")?;
 
     // Create templates.
 
-    let templates: &[(&str, &[u8])] = &[
-        ("index.hbs", include_bytes!("index.hbs")),
-        ("archive.hbs", include_bytes!("archive.hbs")),
-        ("post.hbs", include_bytes!("post.hbs")),
+    let files: &[(&str, &[u8])] = &[
+        ("templates/index.hbs", include_bytes!("index.hbs")),
+        ("templates/archive.hbs", include_bytes!("archive.hbs")),
+        ("templates/post.hbs", include_bytes!("post.hbs")),
     ];
 
-    for &(name, bytes) in templates {
-        dir.push(name);
-        File::create(&dir)?.write_all(bytes)?;
-        dir.pop();
+    for &(path, bytes) in files {
+        File::create(path)?.write_all(bytes)?;
     }
+
+    // Done!
+
+    info!("Your blog is ready!");
 
     Ok(())
 }

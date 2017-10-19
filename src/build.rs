@@ -1,16 +1,16 @@
 use chrono::NaiveDate;
+use error::{Error, Result};
 use handlebars::Handlebars;
 use glob::glob;
 use pulldown_cmark::{html, Parser};
 use slug;
 use std::collections::HashSet;
-use std::error::Error;
 use std::fs::{self, File};
 use std::io::{self, Read};
 use std::path::Path;
 
 //TODO: Better errors.
-pub fn build() -> Result<(), Box<Error>> {
+pub fn build() -> Result {
     let mut handlebars = Handlebars::new();
 
     //TODO: Add strftime helper.
@@ -177,7 +177,7 @@ fn render_post(
     post: &Post,
     prev: Option<&Post>,
     next: Option<&Post>,
-) -> Result<(), Box<Error>> {
+) -> Result {
     // Construct the JSON data.
 
     let data = json!({

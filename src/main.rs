@@ -9,6 +9,7 @@ extern crate pulldown_cmark;
 extern crate slug;
 
 mod build;
+mod error;
 mod init;
 mod post;
 
@@ -16,8 +17,9 @@ use build::build;
 use init::init;
 use post::post;
 use std::env;
+use std::error::Error;
 use std::path::Path;
-use std::process::Command;
+use std::process::{self, Command};
 
 fn main() {
     badlog::init_from_env("LOG_LEVEL");
@@ -50,40 +52,22 @@ fn main() {
     let (cmd, matches) = matches.subcommand();
     let matches = matches.unwrap();
 
-    match cmd {
-        "init" => match init() {
-            Ok(()) => info!("blog initialized"),
-            Err(e) => error!("{}", e),
+    let done = match cmd {
+        "init" => init(),
+        "post" => {
+            let title = matches.value_of("TITLE").unwrap();
+            let edit = matches.is_present("edit");
+            post(title, edit)
         },
-
-        "post" => match post(matches.value_of("TITLE").unwrap()) {
-            Ok(path) => {
-                info!("post created at `{}`", path.display());
-                if matches.is_present("edit") {
-                    edit(&path);
-                }
-            },
-            Err(e) => error!("{}", e),
-        },
-
-        "build" => match build() {
-            Ok(()) => info!("blog built"),
-            Err(e) => error!("{}", e),
-        },
-
+        "build" => build(),
         _ => unreachable!(),
     };
-}
 
-fn edit(path: &Path) {
-    if let Some(ed) = env::var_os("EDITOR") {
-        match Command::new(ed).arg(path).spawn() {
-            Ok(mut child) => {
-                let _ = child.wait();
-            },
-            Err(e) => warn!("{}", e),
-        }
-    } else {
-        warn!("EDITOR not set");
+    match done {
+        Ok(()) => process::exit(0),
+        Err(e) => {
+            error!("{}", e);
+            process::exit(1)
+        },
     }
 }
