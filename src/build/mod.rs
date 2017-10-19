@@ -1,13 +1,10 @@
-use chrono::NaiveDate;
 use error::{Result, ResultExt};
 use handlebars::Handlebars;
 use glob::glob;
 use self::post::Post;
-use pulldown_cmark::{html, Parser};
 use slug;
 use std::collections::HashSet;
 use std::fs::{self, File};
-use std::io::{self, Read};
 use std::path::Path;
 
 mod post;

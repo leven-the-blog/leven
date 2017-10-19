@@ -1,11 +1,6 @@
 use chrono::NaiveDate;
-use handlebars::Handlebars;
-use glob::glob;
 use pulldown_cmark::{html, Parser};
-use slug;
-use std::collections::HashSet;
-use std::error::Error;
-use std::fs::{self, File};
+use std::fs::File;
 use std::io::{self, Read};
 use std::path::Path;
 
