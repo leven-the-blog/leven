@@ -1,6 +1,9 @@
+#![recursion_limit = "1024"]
+
 extern crate badlog;
 extern crate chrono;
 #[macro_use] extern crate clap;
+#[macro_use] extern crate error_chain;
 extern crate glob;
 extern crate handlebars;
 #[macro_use] extern crate log;
@@ -16,10 +19,7 @@ mod post;
 use build::build;
 use init::init;
 use post::post;
-use std::env;
-use std::error::Error;
-use std::path::Path;
-use std::process::{self, Command};
+use std::process;
 
 fn main() {
     badlog::init_from_env("LOG_LEVEL");
@@ -65,8 +65,16 @@ fn main() {
 
     match done {
         Ok(()) => process::exit(0),
-        Err(e) => {
-            error!("{}", e);
+        Err(chain) => {
+            let mut chain = chain.iter();
+
+            if let Some(e) = chain.next() {
+                error!("{}.", e);
+                for e in chain {
+                    error!("Cause: {}.", e);
+                }
+            }
+
             process::exit(1)
         },
     }
