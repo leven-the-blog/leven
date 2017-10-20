@@ -156,6 +156,8 @@ pub fn build() -> Result<()> {
 
     // Done! How on Earth did you read all of this?!
     
+    info!("Blog successfully compiled!");
+
     Ok(())
 }
 
