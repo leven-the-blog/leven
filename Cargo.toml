@@ -2,6 +2,9 @@
 name = "leven"
 version = "0.3.0"
 authors = ["Ram Kaniyur <quadrupleslap@gmail.com>"]
+description = "Make your own blog!"
+repository = "https://github.com/quadrupleslap/leven"
+license = "MIT"
 
 [dependencies]
 log = "0.3"
