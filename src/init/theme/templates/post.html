@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{ post.title }</title>
+    </head>
+    <body>
+        <header>
+            { config.name }
+            <a href="/">Home</a>
+            <a href="/archive.html">Archive</a>
+        </header>
+        <article>
+            <header>
+                <h1>{ post.title }</h1>
+                <small><time>{ post.date }</time></small>
+            </header>
+            { post.content }
+        </article>
+        { if prev }
+            <a href="/{ prev.slug }.html">Previous: { prev.title }</a>
+        { end }
+        { if next }
+            <a href="/{ next.slug }.html">Next: { next.title }</a>
+        { end }
+    </body>
+</html>

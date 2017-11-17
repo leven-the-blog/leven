@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{ config.name }</title>
+    </head>
+    <body>
+        <header>
+            { config.name }
+            <a href="/">Home</a>
+            <a href="/archive.html">Archive</a>
+        </header>
+        { for post in posts }
+            <article>
+                <header>
+                    <h1><a href="/{ post.slug }.html">{ post.title }</a></h1>
+                    <small><time>{ post.date }</time></small>
+                </header>
+                { post.content }
+            </article>
+        { end }
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{ config.name }</title>
+    </head>
+    <body>
+        <header>
+            { config.name }
+            <a href="/">Home</a>
+            <a href="/archive.html">Archive</a>
+        </header>
+        <ul>
+            { for post in posts }
+                <li>
+                    <a href="/{ post.slug }.html">{ post.title }</a>
+                    <small><time>{ post.date }</time></small>
+                </li>
+            { end }
+        </ul>
+    </body>
+</html>

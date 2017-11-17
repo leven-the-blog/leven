@@ -1,0 +1,8 @@
+# The name of your blog.
+name = "Tome of the Unknown"
+
+# The number of posts to show on the front page.
+recents = 5
+
+# The format of the date, using strftime syntax.
+date-format = "%d %B, %Y"

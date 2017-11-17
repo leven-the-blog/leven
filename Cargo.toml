@@ -1,0 +1,16 @@
+[package]
+name = "leven"
+version = "0.3.0"
+authors = ["Ram Kaniyur <quadrupleslap@gmail.com>"]
+
+[dependencies]
+log = "0.3"
+badlog = "0.3"
+chrono = "0.4"
+clap = "2.26"
+pulldown-cmark = "0.1"
+serde = "1.0"
+tenjin = "0.5"
+toml = "0.4"
+rayon = "0.9"
+slug = "0.1"
