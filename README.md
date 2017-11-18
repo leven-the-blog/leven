@@ -1,8 +1,14 @@
 # Leven
 
-Leven is a lightweight Markdown-based static site generator for blogs.
+Leven is a lightweight Markdown-based static site generator for blogs. It's a lot like Jekyll or Hugo, but it's much simpler, much faster, and made specifically for blogs.
 
-## How do I get started?
+### static site generator
+
+/ˈstatɪk sʌɪt ˈdʒɛnəreɪtə/
+
+takes in your blog posts and converts them into a standalone HTML website that you can upload to GitHub Pages or Neocities or just about anywhere else
+
+## Getting Started
 
 Install [Rust](https://rust-lang.org) if you haven't already.
 
@@ -11,12 +17,8 @@ cargo install leven
 leven new amazing-blog
 ```
 
-The rest of the instructions await you there.
+More instructions are included in a sample post.
 
-## Is it any good?
+## Feature Requests / Bug Reports
 
-Yes, it's *really* good. Trust me, the guy who made this, who has *absolutely no conflict of interest*, when I say that it's good. Because it is good. *Really* good. Seriously, though, it's incredibly simple and very, very fast.
-
-## What's it bad at?
-
-Well, if you want tags in your blog, or any kind of extra data attached to your blog posts at all, you've come to the wrong place.
+Even if you're unsure, opening an issue would really help us make this project better!

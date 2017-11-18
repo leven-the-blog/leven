@@ -33,7 +33,7 @@ fn init(name: &str) -> Result<()> {
 
     let files: &[(&str, &[u8])] = files![
         "Leven.toml",
-        "content/Welcome, Stranger!.md",
+        "content/Hello, Stranger!.md",
         "theme/templates/index.html",
         "theme/templates/archive.html",
         "theme/templates/post.html",
@@ -52,7 +52,7 @@ pub fn execute(name: &str) {
     match init(name) {
         Ok(()) => {
             info!("blog ready :)");
-            info!("look in the `content` folder to find out what to do next");
+            info!("see `contents/Hello, Stranger!.md` for an introduction");
         }
         Err(e) => {
             error!("initialization failed ({})", e);
