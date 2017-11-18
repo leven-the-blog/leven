@@ -2,11 +2,11 @@
 
 Leven is a lightweight Markdown-based static site generator for blogs. It's a lot like Jekyll or Hugo, but it's much simpler, much faster, and made specifically for blogs.
 
-### static site generator
-
-/ˈstatɪk sʌɪt ˈdʒɛnəreɪtə/
-
-takes in your blog posts and converts them into a standalone HTML website that you can upload to GitHub Pages or Neocities or just about anywhere else
+> ### static site generator
+>
+> /ˈstatɪk sʌɪt ˈdʒɛnəreɪtə/
+>
+> takes in your blog posts and converts them into a standalone HTML website that you can upload to GitHub Pages or Neocities or just about anywhere else
 
 ## Getting Started
 
