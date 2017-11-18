@@ -52,7 +52,7 @@ pub fn execute(name: &str) {
     match init(name) {
         Ok(()) => {
             info!("blog ready :)");
-            info!("see `contents/Hello, Stranger!.md` for an introduction");
+            info!("see `content/Hello, Stranger!.md` for an introduction");
         }
         Err(e) => {
             error!("initialization failed ({})", e);

@@ -1,6 +1,6 @@
 [package]
 name = "leven"
-version = "0.3.2"
+version = "0.3.3"
 authors = ["Ram Kaniyur <quadrupleslap@gmail.com>"]
 description = "Make your own blog!"
 repository = "https://github.com/quadrupleslap/leven"
