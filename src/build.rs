@@ -112,10 +112,20 @@ fn build() -> Result<()> {
     let tenjin = build_tenjin()?;
 
     if out.is_dir() {
-        fs::remove_dir_all(out)?;
+        for child in fs::read_dir(out)? {
+            let child = child?;
+            if child.file_type()?.is_dir() {
+                fs::remove_dir_all(&child.path())?;
+            } else {
+                fs::remove_file(&child.path())?;
+            }
+        }
+    } else if out.is_file() {
+        fs::remove_file(out)?;
+        fs::create_dir(out)?;
+    } else {
+        fs::create_dir(out)?;
     }
-
-    fs::create_dir(out)?;
 
     if let Err(e) = cpr("theme/assets", "out/assets") {
         error!("failed to copy theme assets ({})", e);
