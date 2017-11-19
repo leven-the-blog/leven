@@ -114,7 +114,7 @@ pub fn cpr<A: AsRef<Path>, B: AsRef<Path>>(from: A, to: B) -> io::Result<()> {
             let to = to.join(from.file_name().unwrap_or(OsStr::new("")));
 
             if let Err(e) = cpr(&from, &to) {
-                error!("failed to copy `{}` ({})", from.display(), e);
+                error!("Failed to copy `{}`: {}.", from.display(), e);
             }
         }
     }

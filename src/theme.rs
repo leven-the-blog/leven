@@ -49,7 +49,7 @@ fn github_like(repo: &str) -> bool {
 
 pub fn execute(repo: &str) {
     match theme(repo) {
-        Ok(()) => info!("theme changed"),
-        Err(e) => error!("theme change failed ({})", e),
+        Ok(()) => info!("Theme changed!"),
+        Err(e) => error!("Theme change failed: {}.", e),
     }
 }

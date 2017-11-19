@@ -128,7 +128,7 @@ fn build() -> Result<()> {
     }
 
     if let Err(e) = cpr("theme/assets", "out/assets") {
-        error!("failed to copy theme assets ({})", e);
+        error!("Failed to copy theme assets: {}.", e);
     }
 
     let mut posts: Vec<Post> = Vec::new();
@@ -139,7 +139,7 @@ fn build() -> Result<()> {
         let entries = match fs::read_dir("content") {
             Ok(entries) => entries,
             Err(e) => {
-                warn!("could not read content directory ({})", e);
+                warn!("Could not read content directory: {}.", e);
                 return;
             },
         };
@@ -153,7 +153,7 @@ fn build() -> Result<()> {
                     match Post::new(&path) {
                         Ok(post) => tx.send(post).unwrap(),
                         Err(e) => {
-                            error!("could not read post `{}` ({})", path.display(), e);
+                            error!("Could not read post `{}`: {}.", path.display(), e);
                             return;
                         }
                     }
@@ -162,7 +162,7 @@ fn build() -> Result<()> {
                 let dst = out.join(path.file_name().unwrap());
 
                 if let Err(e) = cpr(&path, dst) {
-                    error!("failed to copy `{}` ({})", path.display(), e);
+                    error!("Failed to copy `{}`: {}.)", path.display(), e);
                 }
             }
         }
@@ -179,7 +179,7 @@ fn build() -> Result<()> {
         Some(&toml::Value::String(ref s)) => s.as_str(),
         None => DEFAULT_DATE_FORMAT,
         Some(x) => {
-            warn!("expected string for `date-format`, found {}", x);
+            warn!("Expected string for `date-format`, found {}.", x);
             DEFAULT_DATE_FORMAT
         },
     };
@@ -187,19 +187,19 @@ fn build() -> Result<()> {
     // Build `index.html`.
     
     if let Err(e) = build_index(&config, date_format, &tenjin, &posts) {
-        error!("failed to build `index.html` ({})", e);
+        error!("Failed to build `index.html`: {}.", e);
     }
 
     // Build `archive.html`.
 
     if let Err(e) = build_archive(&config, date_format, &tenjin, &posts) {
-        error!("failed to build `archive.html` ({})", e);
+        error!("Failed to build `archive.html`: {}.", e);
     }
     
     // Build posts.
 
     if let Err(e) = build_posts(&config, date_format, &tenjin, &posts) {
-        error!("failed to build posts ({})", e);
+        error!("Failed to build posts: {}.", e);
     }
     
     Ok(())
@@ -234,10 +234,10 @@ fn build_posts(
         let mut file = match File::create(&path) {
             Ok(file) => file,
             Err(e) => {
-                error!("could not open `{}` ({})", path, e);
+                error!("Could not open `{}`: {}.", path, e);
 
                 if e.kind() == io::ErrorKind::NotFound {
-                    info!("maybe you should try a more unique title?");
+                    info!("Maybe you should try a more unique title?");
                 }
 
                 return;
@@ -245,7 +245,7 @@ fn build_posts(
         };
 
         if let Err(e) = tenjin.render(template, &ctx, &mut file) {
-            error!("could not render `{}` ({})", post.title, e);
+            error!("Could not render `{}`: {}.", post.title, e);
         }
     });
 
@@ -289,7 +289,7 @@ fn build_index(
         Some(&toml::Value::Integer(n)) if n > 0 => n as usize,
         None => DEFAULT_RECENTS,
         Some(x) => {
-            warn!("expected natural number for `recents`, found {}", x);
+            warn!("Expected natural number for `recents`, found {}.", x);
             DEFAULT_RECENTS
         },
     };
@@ -314,7 +314,7 @@ fn build_index(
 
 pub fn execute() {
     match build() {
-        Ok(()) => info!("build complete"),
-        Err(e) => error!("build failed ({})", e),
+        Ok(()) => info!("Build complete!"),
+        Err(e) => error!("Build failed: {}.", e),
     }
 }

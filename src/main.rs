@@ -16,7 +16,7 @@ mod util;
 
 
 fn main() {
-    badlog::init_from_env("LOG_LEVEL");
+    badlog::minimal_from_env("LOG_LEVEL");
 
     let matches = clap_app!((crate_name!()) =>
         (version: crate_version!())

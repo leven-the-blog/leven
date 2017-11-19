@@ -8,7 +8,7 @@ license = "MIT"
 
 [dependencies]
 log = "0.3"
-badlog = "0.3"
+badlog = "1.0"
 chrono = "0.4"
 clap = "2.26"
 pulldown-cmark = "0.1"

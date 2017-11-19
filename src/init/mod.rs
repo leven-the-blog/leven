@@ -51,11 +51,11 @@ fn init(name: &str) -> Result<()> {
 pub fn execute(name: &str) {
     match init(name) {
         Ok(()) => {
-            info!("blog ready :)");
-            info!("see `content/Hello, Stranger!.md` for an introduction");
+            info!("Blog ready! :)");
+            info!("See `content/Hello, Stranger!.md` for an introduction.");
         }
         Err(e) => {
-            error!("initialization failed ({})", e);
+            error!("Initialization failed: {}.", e);
         }
     }
 }
