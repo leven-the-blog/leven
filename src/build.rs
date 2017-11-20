@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Local};
 use error::{Error, Result};
 use pulldown_cmark;
 use pulldown_cmark::Parser;
@@ -21,7 +21,7 @@ const DEFAULT_DATE_FORMAT: &'static str = "%d %B, %Y";
 struct Post {
     content: Html,
     title: String,
-    date: DateTime<Utc>,
+    date: DateTime<Local>,
     slug: String,
 }
 

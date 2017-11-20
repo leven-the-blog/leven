@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Local};
 use error::{Result, Error};
 use std::{env, fs, io};
 use std::ffi::OsStr;
@@ -12,7 +12,7 @@ use toml;
 
 pub struct InjectDate<'a> {
     pub format: &'a str,
-    pub date: DateTime<Utc>,
+    pub date: DateTime<Local>,
 }
 
 impl<'a, W: Write> Context<W> for InjectDate<'a> {
