@@ -131,6 +131,8 @@ fn build() -> Result<()> {
         error!("Failed to copy theme assets: {}.", e);
     }
 
+    let out_posts =  Path::new("out/posts");
+    fs::create_dir(out_posts);
     let mut posts: Vec<Post> = Vec::new();
 
     scope(|s| {
@@ -229,7 +231,7 @@ fn build_posts(
             post,
         };
 
-        let path = format!("out/{}.html", post.slug);
+        let path = format!("out/posts/{}.html", post.slug);
 
         let mut file = match File::create(&path) {
             Ok(file) => file,
