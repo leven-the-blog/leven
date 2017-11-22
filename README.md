@@ -16,6 +16,12 @@ Leven is a lightweight Markdown-based static site generator for blogs. It's a lo
 
 See the [wiki page](https://github.com/quadrupleslap/leven/wiki/Getting-Started) to get started in just a few minutes.
 
+## Example Websites
+
+- [oucri.github.io](https://oucri.github.io)
+- [quadrupleslap.github.io](https://quadrupleslap.github.io)
+- [sidneypham.me](https://sidneypham.me)
+
 ## Feature Requests / Bug Reports
 
 Even if you're uncertain, opening an issue would really help us make this project better!
