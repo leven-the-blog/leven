@@ -10,19 +10,11 @@ Leven is a lightweight Markdown-based static site generator for blogs. It's a lo
 >
 > /ˈstatɪk sʌɪt ˈdʒɛnəreɪtə/
 >
-> takes in your blog posts and converts them into a standalone HTML website that you can upload to GitHub Pages or Neocities or just about anywhere else.
-
-## Installing
-
-[Download Leven](https://github.com/quadrupleslap/leven/releases) and put it somewhere in your <a href="https://en.wikipedia.org/wiki/PATH_(variable)">`PATH`</a>. Alternatively, if you have [Rust](https://rust-lang.org), then you can run `cargo install leven`.
+> takes in your blog posts and converts them into a standalone HTML website that you can upload to GitHub Pages or Netlify or Neocities or just about anywhere else.
 
 ## Getting Started
 
-Just start your blog! There's a sample post with more instructions if you need them.
-
-```sh
-leven new my-amazing-blog
-```
+See the [wiki page](https://github.com/quadrupleslap/leven/wiki/Getting-Started) to get started in just a few minutes.
 
 ## Feature Requests / Bug Reports
 
