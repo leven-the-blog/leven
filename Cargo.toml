@@ -1,19 +1,20 @@
 [package]
-name = "leven"
-version = "0.4.1"
 authors = ["Ram Kaniyur <quadrupleslap@gmail.com>"]
 description = "Make your own blog!"
-repository = "https://github.com/quadrupleslap/leven"
 license = "MIT"
+name = "leven"
+repository = "https://github.com/quadrupleslap/leven"
+version = "0.4.1"
 
 [dependencies]
-log = "0.3"
 badlog = "1.0"
 chrono = "0.4"
 clap = "2.26"
+git2 = "0.6.8"
+log = "0.3"
 pulldown-cmark = "0.1"
+rayon = "0.9"
 serde = "1.0"
+slug = "0.1"
 tenjin = "0.5"
 toml = "0.4"
-rayon = "0.9"
-slug = "0.1"
