@@ -1,6 +1,6 @@
-use error::{Error, Result};
-use std::{io, fs};
-use std::process::Command;
+use error::Result;
+use git2::Repository;
+use std::{fs, io};
 use util::cd2root;
 
 fn theme(repo: &str) -> Result<()> {
@@ -26,15 +26,7 @@ fn theme(repo: &str) -> Result<()> {
 
     // Clone `path` into `theme`.
 
-    let status = Command::new("git")
-        .arg("clone")
-        .arg(&path)
-        .arg("theme")
-        .status()?;
-
-    if !status.success() {
-        return Err(Error::ExternalProcess);
-    }
+    Repository::clone(&path, "theme")?;
 
     Ok(())
 }
@@ -43,8 +35,7 @@ fn github_like(repo: &str) -> bool {
     // Has only one slash.
     repo.chars().filter(|&c| c == '/').count() == 1 &&
     // That slash neither the first nor the last character.
-    repo.chars().next() != Some('/') &&
-    repo.chars().last() != Some('/')
+    !repo.starts_with('/') && !repo.ends_with('/')
 }
 
 pub fn execute(repo: &str) {

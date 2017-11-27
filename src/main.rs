@@ -1,11 +1,15 @@
-#[macro_use] extern crate clap;
-#[macro_use] extern crate log;
-#[macro_use] extern crate tenjin;
 extern crate badlog;
 extern crate chrono;
+#[macro_use]
+extern crate clap;
+extern crate git2;
+#[macro_use]
+extern crate log;
 extern crate pulldown_cmark;
 extern crate rayon;
 extern crate slug;
+#[macro_use]
+extern crate tenjin;
 extern crate toml;
 
 mod build;
