@@ -1,7 +1,7 @@
 use chrono::{DateTime, Local};
 use error::{Error, Result};
 use pulldown_cmark;
-use pulldown_cmark::Parser;
+use pulldown_cmark::{Options, Parser};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use rayon::slice::ParallelSliceMut;
 use rayon::scope;
@@ -81,7 +81,7 @@ impl Post {
         File::open(&path)?.read_to_string(&mut src)?;
 
         let mut content = String::new();
-        let parser = Parser::new(&src);
+        let parser = Parser::new_ext(&src, Options::all());
         pulldown_cmark::html::push_html(&mut content, parser);
 
         let title = path.file_stem()
