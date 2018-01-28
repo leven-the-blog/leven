@@ -18,7 +18,6 @@ See the [wiki page](https://github.com/quadrupleslap/leven/wiki/Getting-Started)
 
 ## Example Websites
 
-- [oucri.github.io](https://oucri.github.io)
 - [quadrupleslap.github.io](https://quadrupleslap.github.io)
 - [sidneypham.me](https://sidneypham.me)
 
