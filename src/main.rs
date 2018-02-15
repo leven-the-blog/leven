@@ -11,12 +11,15 @@ extern crate slug;
 #[macro_use]
 extern crate tenjin;
 extern crate toml;
+#[macro_use]
+extern crate serde_derive;
 
 mod build;
 mod error;
 mod init;
 mod theme;
 mod util;
+mod metadata;
 
 
 fn main() {

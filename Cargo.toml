@@ -8,13 +8,14 @@ version = "0.6.0"
 
 [dependencies]
 badlog = "1.0"
-chrono = "0.4"
+chrono = { version = "0.4", features = ["serde"] }
 clap = "2.26"
 git2 = "0.6.8"
 log = "0.3"
 pulldown-cmark = "0.1"
 rayon = "0.9"
 serde = "1.0"
+serde_derive = "1.0"
 slug = "0.1"
 tenjin = "0.5"
 toml = "0.4"

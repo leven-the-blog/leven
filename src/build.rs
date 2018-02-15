@@ -13,6 +13,7 @@ use std::path::Path;
 use std::sync::mpsc::channel;
 use tenjin::Tenjin;
 use toml;
+use metadata;
 use util::{InjectDate, cd2root, load_config, build_tenjin, cpr};
 
 const DEFAULT_RECENTS: usize = 5;
@@ -80,16 +81,22 @@ impl Post {
         let mut src = String::new();
         File::open(&path)?.read_to_string(&mut src)?;
 
+        let (md, src) = metadata::parse_metadata(src);
+
         let mut content = String::new();
         let parser = Parser::new_ext(&src, Options::all());
         pulldown_cmark::html::push_html(&mut content, parser);
 
-        let title = path.file_stem()
-            .unwrap()
-            .to_string_lossy()
-            .into();
+        let title = md.title.unwrap_or(
+            path.file_stem()
+                .unwrap()
+                .to_string_lossy()
+                .into()
+        );
 
-        let date  = path.metadata()?.modified()?.into();
+        let date  = md.date.unwrap_or(
+            path.metadata()?.modified()?.into()
+        );
         let slug  = slug::slugify(&title);
 
         Ok(Post { content, title, date, slug })
