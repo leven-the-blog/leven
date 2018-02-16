@@ -81,7 +81,7 @@ impl Post {
         let mut src = String::new();
         File::open(&path)?.read_to_string(&mut src)?;
 
-        let (md, src) = metadata::parse_metadata(src);
+        let (md, src) = metadata::parse_metadata(&src);
 
         let mut content = String::new();
         let parser = Parser::new_ext(&src, Options::all());

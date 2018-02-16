@@ -9,39 +9,20 @@ pub struct Metadata {
     // pub feed: Option<bool>, // not used yet
 }
 
-pub fn parse_metadata(src:String) -> (Metadata, String) {
-    let mut md_found = false;
-    let mut md_done = false;
+pub fn parse_metadata(src:&str) -> (Metadata, &str) {
     let mut md = Metadata::default();
-    let mut md_lines = vec![];
-    let mut no_md_lines = vec![];
-    for line in src.lines() {
-        if md_done {
-            no_md_lines.push(line);
-            continue;
-        }
-        if !md_found {
-            if line.starts_with("+++") {
-                md_found = true;
-            } else {
-                md_done = true;
-            }
-        } else {
-            if line.starts_with("+++") {
-                md_done = true;
-            } else {
-                md_lines.push(line)
-            }
-        }
+    if !src.starts_with("+++") {
+        return (md, src)
     }
-    if md_found {
-        let md_string = md_lines.join("\n");
-        info!("md: {}", md_string);
-        match toml::from_str::<Metadata>(&md_string) {
-            Ok(md2) => md = md2,
-            Err(e) => error!("Error parsing metadata: {:?}", e),
-        }
+    let v:Vec<&str> = src.splitn(3, "+++").collect();
+    if v.len() != 3 {
+        return (md, src)
     }
-    let remainder = no_md_lines.join("\n");
-    (md, remainder)
+    let md_str = v[1];
+    info!("md: {}", md_str);
+    match toml::from_str::<Metadata>(&md_str) {
+        Ok(md2) => md = md2,
+        Err(e) => error!("Error parsing metadata: {:?}", e),
+    }
+    return (md, v[2])
 }
