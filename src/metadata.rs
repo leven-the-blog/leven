@@ -1,4 +1,6 @@
-use chrono::{DateTime, Local};
+use std::str::FromStr;
+use std::fmt::Debug;
+
 use toml;
 
 #[derive(Default)]
@@ -39,12 +41,14 @@ impl Metadata {
         }
     }
 
-    pub fn get_date(&self, name:&str) -> Option<DateTime<Local>> {
+    pub fn get<T>(&self, name:&str) -> Option<T>
+        where T:FromStr, <T as FromStr>::Err: Debug
+    {
         if let Some(s) = self.get_string(name) {
-            match s.parse::<DateTime<Local>>() {
-                Ok(d) => Some(d),
+            match s.parse::<T>() {
+                Ok(t) => Some(t),
                 Err(e) => {
-                    error!("Error parsing date {}: {:?}", s, e);
+                    error!("Error parsing {}: {:?}", s, e);
                     None
                 }
             }

@@ -94,7 +94,7 @@ impl Post {
                 .into()
         );
 
-        let date  = md.get_date("date").unwrap_or(
+        let date  = md.get::<DateTime<Local>>("date").unwrap_or(
             path.metadata()?.modified()?.into()
         );
         let slug  = slug::slugify(&title);
