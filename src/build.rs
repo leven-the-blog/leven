@@ -87,14 +87,14 @@ impl Post {
         let parser = Parser::new_ext(&src, Options::all());
         pulldown_cmark::html::push_html(&mut content, parser);
 
-        let title = md.title.unwrap_or(
+        let title = md.get_string("title").unwrap_or(
             path.file_stem()
                 .unwrap()
                 .to_string_lossy()
                 .into()
         );
 
-        let date  = md.date.unwrap_or(
+        let date  = md.get_date("date").unwrap_or(
             path.metadata()?.modified()?.into()
         );
         let slug  = slug::slugify(&title);
