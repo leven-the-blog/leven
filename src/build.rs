@@ -23,6 +23,7 @@ struct Post {
     content: Html,
     title: String,
     date: DateTime<Local>,
+    updated_date: DateTime<Local>,
     slug: String,
 }
 
@@ -53,6 +54,10 @@ context! {
         title => self.post.title.as_str(),
         date => InjectDate {
             date: self.post.date,
+            format: self.date_format,
+        },
+        updated_date => InjectDate {
+            date: self.post.updated_date,
             format: self.date_format,
         },
         slug => self.post.slug.as_str(),
@@ -94,12 +99,16 @@ impl Post {
                 .into()
         );
 
+        let updated_date  = md.get::<DateTime<Local>>("updated_date").unwrap_or(
+            path.metadata()?.modified()?.into()
+        );
+
         let date  = md.get::<DateTime<Local>>("date").unwrap_or(
             path.metadata()?.modified()?.into()
         );
         let slug  = slug::slugify(&title);
 
-        Ok(Post { content, title, date, slug })
+        Ok(Post { content, title, date, updated_date, slug })
     }
 
     fn wrap<'a>(&'a self, date_format: &'a str) -> PostWrap<'a> {
@@ -205,7 +214,7 @@ fn build() -> Result<()> {
     
     // Build `feed.xml`.
 
-    if let Err(e) = build_atom_feed(&config, date_format, &tenjin, &posts) {
+    if let Err(e) = build_atom_feed(&config, &tenjin, &posts) {
         error!("Failed to build `feed.xml`: {}.", e);
     }
     
@@ -294,13 +303,14 @@ fn build_archive(
 
 fn build_atom_feed(
     config: &toml::Value,
-    date_format: &str,
     tenjin: &Tenjin,
     posts: &[Post]
 ) -> Result<()> {
+
+    // date_format needs to be rfc3339 for atom
     let ctx = ListContext {
         config,
-        date_format,
+        date_format:"%FT%T%:z",
         posts,
     };
 
