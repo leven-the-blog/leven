@@ -203,6 +203,12 @@ fn build() -> Result<()> {
         error!("Failed to build `archive.html`: {}.", e);
     }
     
+    // Build `feed.xml`.
+
+    if let Err(e) = build_atom_feed(&config, date_format, &tenjin, &posts) {
+        error!("Failed to build `feed.xml`: {}.", e);
+    }
+    
     // Build posts.
 
     if let Err(e) = build_posts(&config, date_format, &tenjin, &posts) {
@@ -280,6 +286,30 @@ fn build_archive(
     };
 
     let mut file = File::create("out/archive.html")?;
+
+    tenjin.render(template, &ctx, &mut file)?;
+
+    Ok(())
+}
+
+fn build_atom_feed(
+    config: &toml::Value,
+    date_format: &str,
+    tenjin: &Tenjin,
+    posts: &[Post]
+) -> Result<()> {
+    let ctx = ListContext {
+        config,
+        date_format,
+        posts,
+    };
+
+    let template = match tenjin.get("feed") {
+        Some(template) => template,
+        None => return Err(Error::TemplateNotFound("feed".into())),
+    };
+
+    let mut file = File::create("out/feed.xml")?;
 
     tenjin.render(template, &ctx, &mut file)?;
 
