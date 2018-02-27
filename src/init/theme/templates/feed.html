@@ -9,7 +9,9 @@
   <entry>
     <title>{ post.title }</title>
     <id>{ config.base_url }{ post.slug }.html</id>
+    { if post.updated_date }
     <updated>{ post.updated_date }</updated>
+    { end }
     <author>
       <name>{ config.author }</name>
       <email>{ config.email }</email>
@@ -17,7 +19,9 @@
     </author>
     <published>{ post.date }</published>
     <content type="xhtml">
-      { post.content }
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          { post.content }
+        </div>
     </content>
   </entry>
   { end }
