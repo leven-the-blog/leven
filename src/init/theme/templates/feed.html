@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{ config.name }</title>
+  <id>urn:uuid:{ config.uuid }</id>
+  <updated>{ config.date }</updated>
+  <link href="{ config.feed_url }" rel="self"/>
+  <link href="{ config.home_url }" rel="alternate"/>
+  { for post in posts }
+  <entry>
+    <title>{ post.title }</title>
+    <id>{ config.base_url }{ post.slug }.html</id>
+    { if post.updated_date }
+    <updated>{ post.updated_date }</updated>
+    { end }
+    <author>
+      <name>{ config.author }</name>
+      <email>{ config.email }</email>
+      <uri>{ config.home_url }</uri>
+    </author>
+    <published>{ post.date }</published>
+    <content type="xhtml">
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          { post.content }
+        </div>
+    </content>
+  </entry>
+  { end }
+</feed>

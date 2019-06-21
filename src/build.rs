@@ -13,6 +13,7 @@ use std::path::Path;
 use std::sync::mpsc::channel;
 use tenjin::Tenjin;
 use toml;
+use metadata;
 use util::{InjectDate, cd2root, load_config, build_tenjin, cpr};
 
 const DEFAULT_RECENTS: usize = 5;
@@ -22,6 +23,7 @@ struct Post {
     content: Html,
     title: String,
     date: DateTime<Local>,
+    updated_date: DateTime<Local>,
     slug: String,
 }
 
@@ -54,6 +56,10 @@ context! {
             date: self.post.date,
             format: self.date_format,
         },
+        updated_date => InjectDate {
+            date: self.post.updated_date,
+            format: self.date_format,
+        },
         slug => self.post.slug.as_str(),
     }
 
@@ -80,19 +86,29 @@ impl Post {
         let mut src = String::new();
         File::open(&path)?.read_to_string(&mut src)?;
 
+        let (md, src) = metadata::parse_metadata(&src);
+
         let mut content = String::new();
         let parser = Parser::new_ext(&src, Options::all());
         pulldown_cmark::html::push_html(&mut content, parser);
 
-        let title = path.file_stem()
-            .unwrap()
-            .to_string_lossy()
-            .into();
+        let title = md.get_string("title").unwrap_or(
+            path.file_stem()
+                .unwrap()
+                .to_string_lossy()
+                .into()
+        );
 
-        let date  = path.metadata()?.modified()?.into();
+        let updated_date  = md.get::<DateTime<Local>>("updated_date").unwrap_or(
+            path.metadata()?.modified()?.into()
+        );
+
+        let date  = md.get::<DateTime<Local>>("date").unwrap_or(
+            path.metadata()?.modified()?.into()
+        );
         let slug  = slug::slugify(&title);
 
-        Ok(Post { content, title, date, slug })
+        Ok(Post { content, title, date, updated_date, slug })
     }
 
     fn wrap<'a>(&'a self, date_format: &'a str) -> PostWrap<'a> {
@@ -196,6 +212,12 @@ fn build() -> Result<()> {
         error!("Failed to build `archive.html`: {}.", e);
     }
     
+    // Build `feed.xml`.
+
+    if let Err(e) = build_atom_feed(&config, &tenjin, &posts) {
+        error!("Failed to build `feed.xml`: {}.", e);
+    }
+    
     // Build posts.
 
     if let Err(e) = build_posts(&config, date_format, &tenjin, &posts) {
@@ -273,6 +295,31 @@ fn build_archive(
     };
 
     let mut file = File::create("out/archive.html")?;
+
+    tenjin.render(template, &ctx, &mut file)?;
+
+    Ok(())
+}
+
+fn build_atom_feed(
+    config: &toml::Value,
+    tenjin: &Tenjin,
+    posts: &[Post]
+) -> Result<()> {
+
+    // date_format needs to be rfc3339 for atom
+    let ctx = ListContext {
+        config,
+        date_format:"%FT%T%:z",
+        posts,
+    };
+
+    let template = match tenjin.get("feed") {
+        Some(template) => template,
+        None => return Err(Error::TemplateNotFound("feed".into())),
+    };
+
+    let mut file = File::create("out/feed.xml")?;
 
     tenjin.render(template, &ctx, &mut file)?;
 

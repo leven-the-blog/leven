@@ -72,8 +72,18 @@ impl<'a, W: Write> Context<W> for InjectDate<'a> {
 pub fn load_config() -> Result<toml::Value> {
     let mut config = String::new();
     File::open("Leven.toml")?
-        .read_to_string(&mut config)?;
-    Ok(toml::Value::from_str(&config)?)
+    .read_to_string(&mut config)?;
+    let mut config = toml::Value::from_str(&config)?;
+    if let Some(table) = config.as_table_mut() {
+        match table.get("date") {
+            None => {
+                let s = Local::now().to_rfc3339();
+                table.insert("date".into(), toml::Value::String(s));
+            },
+            _ => (),
+        }
+    }
+    Ok(config)
 }
 
 pub fn build_tenjin() -> Result<Tenjin> {
