@@ -17,6 +17,7 @@ mod error;
 mod init;
 mod theme;
 mod util;
+mod metadata;
 
 
 fn main() {
